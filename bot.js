@@ -106,6 +106,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
   const lines = msg.content.split("\n");
   const guild = reaction.message.guild;
 
+  if (reaction.message.channel.id !== server.config.rolesChannel)
+    return;
+
   let react, role, roleObj, initiator;
 
   for(let i = 0; i < lines.length; i++){
