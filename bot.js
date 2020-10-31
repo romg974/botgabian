@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
-const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
+const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USER'] });
 const fs = require('fs');
-
 
 
 client.commands = new Discord.Collection();
@@ -116,7 +115,6 @@ async function onReact(reaction, user, add){
       react = lines[i][0];
 
       if(reaction.emoji.name[0] == react){
-        console.log(lines);
         role = lines[i].split('@')[1].replace('>', '').replace('&', '').trim();
 
         let roleObj = reaction.message.guild.roles.cache.get(role);
@@ -125,6 +123,7 @@ async function onReact(reaction, user, add){
           if(add){
             gm.roles.add(roleObj);
             gm.send('✅ Je t\'ai rajouté le rôle '+roleObj.name+' ! Tu peux maintenant accéder au channel correspondant. Si tu veux quitter le channel, enlève la react sur le message 😉');
+            console.log(`Adding ${roleObj.name} to ${user.id}`);
           }
           else{
             gm.roles.remove(roleObj);
