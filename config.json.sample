@@ -2,6 +2,6 @@
   "token": "",
   "prefix": "!",
   "gabianLink": false,
-  "persistantChannels": ["692326500480843870", "692419609071976459", "692400488569634908", "692326617674154015", "692091973917736990"],
-  "rolesChannel": "692400488569634908"
+   "advancedLink": false,
+  "rolesChannel": "772152876344279040"
 }

@@ -27,7 +27,7 @@ var server  = {
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  client.user.setActivity('Déguster de la bière');
+  client.user.setActivity('finir le diapo de la prochaine forma');
   //692400488569634908
 
 });
@@ -88,7 +88,7 @@ client.on('message', async msg => {
 
 });
 
-client.on('messageReactionAdd', async (reaction, user) => {
+async function onReact(reaction, user, add){
   // When we receive a reaction we check if the reaction is partial or not
   if (reaction.partial) {
     // If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
@@ -122,8 +122,14 @@ client.on('messageReactionAdd', async (reaction, user) => {
         let roleObj = reaction.message.guild.roles.cache.get(role);
 
         guild.members.fetch(user.id).then(function(gm){
-          gm.roles.add(roleObj);
-          gm.send('✅ Je t\'ai rajouté le rôle '+roleObj.name);
+          if(add){
+            gm.roles.add(roleObj);
+            gm.send('✅ Je t\'ai rajouté le rôle '+roleObj.name);
+          }
+          else{
+            gm.roles.remove(roleObj);
+            gm.send('✅ Je t\'ai retiré le rôle '+roleObj.name);
+          }
         });
       }
 
@@ -132,6 +138,14 @@ client.on('messageReactionAdd', async (reaction, user) => {
     }
 
   }
+}
+
+client.on('messageReactionAdd', async (reaction, user) => {
+  await onReact(reaction, user, true);
+});
+
+client.on('messageReactionRemove', async (reaction, user) => {
+  await onReact(reaction, user, false);
 });
 
 // Prevent fails
