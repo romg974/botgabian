@@ -124,7 +124,7 @@ async function onReact(reaction, user, add){
         guild.members.fetch(user.id).then(function(gm){
           if(add){
             gm.roles.add(roleObj);
-            gm.send('✅ Je t\'ai rajouté le rôle '+roleObj.name);
+            gm.send('✅ Je t\'ai rajouté le rôle '+roleObj.name+' ! Tu peux maintenant accéder au channel correspondant. Si tu veux quitter le channel, enlève la react sur le message 😉');
           }
           else{
             gm.roles.remove(roleObj);
